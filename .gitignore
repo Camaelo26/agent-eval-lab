@@ -6,3 +6,6 @@ venv/
 .env
 reports/
 .DS_Store
+
+# Workflow lives in ci/ until the push token has the workflow scope.
+.github/
