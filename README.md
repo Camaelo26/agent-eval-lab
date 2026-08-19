@@ -138,7 +138,7 @@ exit=1
 ```
 
 CI runs this deliberately and **fails the build if the bad agent passes**
-(`.github/workflows/evals.yml`).
+(`ci/github-actions-evals.yml`; copy it to `.github/workflows/` to enable it on a fork).
 
 ---
 
