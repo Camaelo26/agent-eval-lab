@@ -1,0 +1,45 @@
+name: evals
+
+# The point of the whole repo: quality is checked on every push, not by hand
+# before a demo. The gate exits non-zero and the job fails.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-and-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Unit tests
+        run: python -m pytest -q
+
+      - name: Audit the judge before trusting its scores
+        run: python cli.py audit-judge --judge rubric
+
+      - name: Run the eval suite against the committed baseline
+        run: python cli.py run --agent v2 --judge rubric --json-out reports/latest.json
+
+      - name: Prove the gate can fail
+        # A gate that has never blocked anything is not a gate. The known-bad
+        # build must exit non-zero, so the step succeeds only when the gate fails.
+        run: |
+          if python cli.py run --agent v1 --judge rubric; then
+            echo "gate passed the known-bad build - the gate is broken"
+            exit 1
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-report
+          path: reports/latest.json

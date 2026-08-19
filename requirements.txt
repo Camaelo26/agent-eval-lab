@@ -1,0 +1,6 @@
+# The harness itself (evalkit/) uses the standard library only.
+# Everything below is for the HTTP layer, the optional LLM judge, and tests.
+fastapi>=0.115
+uvicorn[standard]>=0.30
+httpx>=0.27
+pytest>=8.0

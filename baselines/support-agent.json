@@ -1,0 +1,10 @@
+{
+  "suite": "support-agent:v2",
+  "judge": "rubric",
+  "n_cases": 15,
+  "pass_rate": 0.8667,
+  "mean_judge_score": 0.786,
+  "mean_groundedness": 0.7111,
+  "mean_tool_score": 0.9289,
+  "p95_latency_ms": 0.078
+}
