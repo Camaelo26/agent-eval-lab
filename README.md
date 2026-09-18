@@ -16,6 +16,13 @@ python cli.py run --agent v1 --judge rubric    # known-bad build, exits 1
 uvicorn app.main:app --reload                  # HTTP API on :8000
 ```
 
+Or in a container. The image build runs the test suite, so a red suite never becomes an image:
+
+```bash
+docker build -t agent-eval-lab .
+docker run -p 8000:8000 agent-eval-lab
+```
+
 ---
 
 ## Why this exists
